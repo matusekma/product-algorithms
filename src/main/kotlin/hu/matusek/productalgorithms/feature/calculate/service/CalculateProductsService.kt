@@ -1,7 +1,14 @@
 package hu.matusek.productalgorithms.feature.calculate.service
 
+import hu.matusek.productalgorithms.error.exception.OperationNotPermittedException
+
 interface CalculateProductsService {
 
-    fun calculateProductsA(numbers: List<Int>): List<Int>
+    fun calculateProducts(numbers: List<Int>): List<Int>
 
+    fun validateNumberListLength(numbers: List<Int>) {
+        if (numbers.size == 1) {
+            throw OperationNotPermittedException("The array must be empty or longer than 1 elements!")
+        }
+    }
 }
