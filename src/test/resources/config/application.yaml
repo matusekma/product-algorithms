@@ -1,8 +1,3 @@
-logging:
-  level:
-    root: error
-    org.springframework: ERROR
-
 server:
   error:
     include-message: always
@@ -11,12 +6,13 @@ server:
 
 spring:
   application:
-    name: product-algorithms
+    name: product-algorithms-test
   datasource:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:tc:postgresql:15.1:///product-algorithms-test?serverTimezone=UTC&TC_REUSABLE=true
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  test:
+    database:
+      replace: none
   jpa:
     properties:
       hibernate:
@@ -25,37 +21,15 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: validate
+    show-sql: true
   liquibase:
     enabled: true
     user: postgres
     password: postgres
     change-log: classpath:/db/changelog/db.changelog-master.xml
 
----
-
-spring:
-  config:
-    activate:
-      on-profile: dev
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: validate
-
 logging:
   level:
     root: INFO
     org.springframework.web: INFO
     org.springframework.security: INFO
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: prod
-  jpa:
-    hibernate:
-      ddl-auto: validate
-
-
