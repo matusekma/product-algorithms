@@ -6,23 +6,31 @@ import hu.matusek.productalgorithms.feature.calculate.service.CalculateProductsS
 import hu.matusek.productalgorithms.feature.calculate.service.CalculateProductsTaskAService
 import hu.matusek.productalgorithms.feature.calculate.service.CalculateProductsTaskBService
 import hu.matusek.productalgorithms.feature.calculate.service.CalculateProductsTaskCService
+import hu.matusek.productalgorithms.feature.history.dto.SaveCalculationHistoryRequest
+import hu.matusek.productalgorithms.feature.history.service.CalculationHistoryService
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.RestController
+import java.time.OffsetDateTime
 
 @RestController
 class CalculateProductsController(
     val calculateProductsTaskAService: CalculateProductsTaskAService,
     val calculateProductsTaskBService: CalculateProductsTaskBService,
     val calculateProductsTaskCService: CalculateProductsTaskCService,
+    val calculationHistoryService: CalculationHistoryService
 ) : CalculateProductsApi {
 
+    @Transactional
     override fun calculateA(calculateProductsRequest: CalculateProductsRequest): CalculateProductsResponse =
         calculate(calculateProductsTaskAService, calculateProductsRequest)
 
 
+    @Transactional
     override fun calculateB(calculateProductsRequest: CalculateProductsRequest): CalculateProductsResponse =
         calculate(calculateProductsTaskBService, calculateProductsRequest)
 
 
+    @Transactional
     override fun calculateC(calculateProductsRequest: CalculateProductsRequest): CalculateProductsResponse =
         calculate(calculateProductsTaskCService, calculateProductsRequest)
 
@@ -31,12 +39,19 @@ class CalculateProductsController(
         calculateProductsService: CalculateProductsService,
         calculateProductsRequest: CalculateProductsRequest
     ): CalculateProductsResponse {
-        // save request
+        val timestamp = OffsetDateTime.now()
+
         val products = calculateProductsService.calculateProducts(calculateProductsRequest.input)
 
-        val response = CalculateProductsResponse(products)
+        val saveCalculationHistoryRequest = SaveCalculationHistoryRequest(
+            calculateProductsRequest.comment,
+            calculateProductsService.getAlgorithmType(),
+            calculateProductsRequest.input,
+            products,
+            timestamp
+        )
+        calculationHistoryService.saveCalculationToHistory(saveCalculationHistoryRequest)
 
-        // save response
-        return response
+        return CalculateProductsResponse(products)
     }
 }

@@ -1,9 +1,12 @@
 package hu.matusek.productalgorithms.feature.calculate.service
 
+import hu.matusek.productalgorithms.domain.AlgorithmType
 import org.springframework.stereotype.Service
 
 @Service
 class CalculateProductsTaskAService : CalculateProductsService {
+
+    override fun getAlgorithmType() = AlgorithmType.A
 
     override fun calculateProducts(numbers: List<Int>): List<Int> {
         validateNumberListLength(numbers)
