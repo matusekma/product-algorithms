@@ -18,7 +18,7 @@ class CalculateProductsTaskCService : CalculateProductsService {
         // multiply with prefix products
         for (i in numbers.size - 1 downTo 0) {
             products[i] = products[i] * temp
-            temp *= products[i]
+            temp *= numbers[i]
         }
         return products
     }
