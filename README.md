@@ -1,6 +1,18 @@
 # product-algorithms
 Small Spring Boot application for solving an algorithmic problem
 
+## Building and running tests
+Clone the repository and run:  
+`./gradlew clean test --info`
+
+## Running the app
+Start the database using Docker:  
+`docker-compose -f docker-compose.yml --env-file .docker-env up -d`
+
+Run the application   
+`./gradlew bootRun -DJDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/product-algorithms -DJDBC_DATABASE_USERNAME=postgres -DJDBC_DATABASE_PASSWORD=postgres`
+
+
 ## Task Description:
 Write a backend application in Node.js, Java, or .NET Core to solve an algorithmic problem
 and retrieve earlier solutions via an API.  
