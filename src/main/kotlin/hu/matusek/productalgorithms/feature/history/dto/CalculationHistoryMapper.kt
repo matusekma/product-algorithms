@@ -10,3 +10,12 @@ fun CalculationHistoryEntry.toCalculationHistoryResponse() =
         result,
         timestamp
     )
+
+fun SaveCalculationHistoryRequest.toCalculationHistoryEntry() =
+    CalculationHistoryEntry(
+        comment = comment,
+        algorithmType = algorithmType,
+        input = input,
+        result = result,
+        timestamp = timestamp
+    )

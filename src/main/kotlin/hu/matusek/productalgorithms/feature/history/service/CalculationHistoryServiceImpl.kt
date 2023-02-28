@@ -1,9 +1,6 @@
 package hu.matusek.productalgorithms.feature.history.service
 
-import hu.matusek.productalgorithms.feature.history.dto.CalculationHistoryFilter
-import hu.matusek.productalgorithms.feature.history.dto.CalculationHistoryResponse
-import hu.matusek.productalgorithms.feature.history.dto.SaveCalculationHistoryRequest
-import hu.matusek.productalgorithms.feature.history.dto.toCalculationHistoryResponse
+import hu.matusek.productalgorithms.feature.history.dto.*
 import hu.matusek.productalgorithms.repository.CalculationHistoryEntryRepository
 import org.springframework.stereotype.Service
 
@@ -13,7 +10,7 @@ class CalculationHistoryServiceImpl(
 ) : CalculationHistoryService {
 
     override fun saveCalculationToHistory(saveCalculationHistoryRequest: SaveCalculationHistoryRequest) {
-        TODO("Implement")
+        calculationCalculationHistoryEntryRepository.save(saveCalculationHistoryRequest.toCalculationHistoryEntry())
     }
 
     override fun searchCalculationHistory(calculationHistoryFilter: CalculationHistoryFilter): List<CalculationHistoryResponse> =
