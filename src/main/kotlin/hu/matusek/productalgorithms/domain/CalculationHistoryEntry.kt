@@ -7,8 +7,8 @@ import java.time.OffsetDateTime
 
 
 @Entity
-@Table(name = "history_entries")
-class HistoryEntry(
+@Table(name = "calculation_history_entries")
+class CalculationHistoryEntry(
     id: Long? = null,
     var comment: String,
     @Enumerated(EnumType.STRING)
@@ -31,7 +31,7 @@ class HistoryEntry(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
-        return id != null && id == (other as HistoryEntry).id
+        return id != null && id == (other as CalculationHistoryEntry).id
     }
 
     override fun hashCode(): Int = id?.hashCode() ?: 0
